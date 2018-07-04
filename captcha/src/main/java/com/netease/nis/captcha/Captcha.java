@@ -276,7 +276,7 @@ public class Captcha {
         }
     }
 
-    public void Validate() {
+    public void validate() {
 
         try {
             Log.d(TAG, "validate start");
@@ -291,7 +291,7 @@ public class Captcha {
                 }
             }
         } catch (Exception e) {
-            Log.e(TAG, "Captcha SDK Validate Error:" + e.toString());
+            Log.e(TAG, "Captcha SDK validate Error:" + e.toString());
         }
     }
 
@@ -363,7 +363,9 @@ public class Captcha {
             }
             //避免重复发送网络状态消息，比如因为无网导致的网络超时，只需提示无网络连接，而无需提示初始化超时
             if (!isAlreadySendNetMsg) {
-                handler.sendMessage(message);
+                if (handler != null) {
+                    handler.sendMessage(message);
+                }
                 isAlreadySendNetMsg = true;
             }
 

@@ -125,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                 //关闭mLoginTask任务可以放在myCaptchaListener的onCancel接口中处理
                 mLoginTask.execute();
                 //可直接调用验证函数Validate()，本demo采取在异步任务中调用（见UserLoginTask类中）
-                //mCaptcha.Validate();
+                //mCaptcha.validate();
             }
         });
 
@@ -165,7 +165,7 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(final Boolean success) {
             if (success) {
                 //必填：开始验证
-                mCaptcha.Validate();
+                mCaptcha.validate();
 
             } else {
                 toastMsg("验证码SDK参数设置错误,请检查配置");
