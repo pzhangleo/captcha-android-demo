@@ -18,8 +18,6 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static java.security.AccessController.getContext;
-
 /**
  * 本地Captcha1 其中包括请求url与二次校验函数，需要与服务器协商再写
  * Created by hzhudingyao on 2016/12/1.
@@ -253,9 +251,20 @@ public class Captcha {
                         timer.cancel();
                         timer.purge();
                         progressDialog.isCancelLoading = true;
+                        //progress dialog 被用户手动取消以后，验证码dialog也停止加载和显示
+                        if (captchaDialog != null) {
+                            if (captchaDialog.getDwebview() != null) {
+                                captchaDialog.getDwebview().stopLoading();
+                            }
+                            if (captchaDialog.isShowing()) {
+                                captchaDialog.dismiss();
+                            } else {
+                                captchaDialog.setShowing(true);
+                            }
+                        }
                     }
                     //这里注释掉，后面captchaDialog.setOnCancelListener会有调用caListener.onCancel();
-                    //caListener.onCancel();
+//                    caListener.onCancel();
                 }
             });
             progressDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
