@@ -65,7 +65,9 @@ public class JSInterface {
 
                     new Handler().postDelayed(new Runnable() {
                         public void run() {
-                            captchaDialog.show();
+                            if (!captchaDialog.isShowing()) {
+                                captchaDialog.show();
+                            }
                         }
                     }, 100);
                 }

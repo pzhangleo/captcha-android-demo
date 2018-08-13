@@ -115,6 +115,10 @@ public class CaptchaDialog extends Dialog {
         return this.isShowing;
     }
 
+    public void setShowing(boolean showing) {
+        isShowing = showing;
+    }
+
     public void initDialog() {
         Log.d(Captcha.TAG, "start init dialog");
         getDialogWidth();
@@ -247,5 +251,7 @@ public class CaptchaDialog extends Dialog {
         super.onDetachedFromWindow();
     }
 
-
+    public CaptchaWebView getDwebview() {
+        return dwebview;
+    }
 }
