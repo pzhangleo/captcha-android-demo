@@ -263,8 +263,7 @@ public class Captcha {
                             }
                         }
                     }
-                    //这里注释掉，后面captchaDialog.setOnCancelListener会有调用caListener.onCancel();
-//                    caListener.onCancel();
+                    caListener.onCancel();
                 }
             });
             progressDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
