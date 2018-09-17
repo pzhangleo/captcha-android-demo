@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -161,11 +162,18 @@ public class CaptchaDialog extends Dialog {
         sburl.append("&debug=" + this.debug);
         sburl.append("&width=" + (int) (dWidth / dScale));
         String locale = getContext().getResources().getConfiguration().locale.getLanguage();
-        if (locale.contains("zh") || locale.contains("ko") || locale.contains("en")) {
-            sburl.append("&lang=" + locale);
+        if (!TextUtils.isEmpty(locale)) {
+            if (!locale.contains("zh")) {
+                if (locale.contains("ko")) {
+                    sburl.append("&lang=").append("ko");
+                } else {
+                    sburl.append("&lang=").append("en");
+                }
+            }
         } else {
-            sburl.append("&lang=en");
+            sburl.append("&lang=").append("en");
         }
+
 
         String requrl = sburl.toString();
         Log.d(Captcha.TAG, "url: " + requrl);
