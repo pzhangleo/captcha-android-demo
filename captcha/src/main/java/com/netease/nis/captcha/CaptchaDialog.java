@@ -14,6 +14,8 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
 
+import java.util.Locale;
+
 /**
  * 自定义Dialog 主要用于获取url地址然后加载
  * Created by hzhudingyao on 2016/12/1.
@@ -81,17 +83,6 @@ public class CaptchaDialog extends Dialog {
     }
 
     private String getDeviceId() {
-
-        try {
-            if (this.dDeviceId.equals("")) {
-                TelephonyManager tel = (TelephonyManager) this.dcontext.getSystemService(Context.TELEPHONY_SERVICE);
-                if (tel != null) {
-                    this.dDeviceId = tel.getDeviceId();
-                }
-            }
-        } catch (Exception e) {
-            Log.e(Captcha.TAG, "getImei failed");
-        }
         return this.dDeviceId;
     }
 
@@ -169,8 +160,13 @@ public class CaptchaDialog extends Dialog {
         sburl.append("&title=" + this.dTitle);
         sburl.append("&debug=" + this.debug);
         sburl.append("&width=" + (int) (dWidth / dScale));
-        if (isEnglishLangulage)
+        String locale = getContext().getResources().getConfiguration().locale.getLanguage();
+        if (locale.contains("zh") || locale.contains("ko") || locale.contains("en")) {
+            sburl.append("&lang=" + locale);
+        } else {
             sburl.append("&lang=en");
+        }
+
         String requrl = sburl.toString();
         Log.d(Captcha.TAG, "url: " + requrl);
         dwebview.addJavascriptInterface(new JSInterface(dcontext, dcaListener, this), "JSInterface");
